@@ -48,18 +48,18 @@ const data = {
 
 function CategorySwiper() {
     return (
-        <div className="_container">
+        <div className="_container _category-slider">
             <h2 className="_title mb-16">{ data.title }</h2>
             <Swiper
                 loop={ true }
-                slidesPerView={ (data.data.length > 4 ? 4 : data.data.length) }
-                spaceBetween={ 32 }
+                spaceBetween={ 10 }
                 modules={[ Navigation ]}
                 navigation={ true }
-                className="_category_slider"
+                slidesPerView={ "auto" }
+                className="_category-slider__container justify-between"
             >
                 { data.data.map(item => (
-                    <SwiperSlide key={ item.id }>
+                    <SwiperSlide key={ item.id } className="max-w-48 sm:max-w-64">
                         <a href={ item.url }>
                             <img src={ item.src } alt="" className="mb-8"/>
                             <h3 className="text-xl font-bold">{ item.title }</h3>

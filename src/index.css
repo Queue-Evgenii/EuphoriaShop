@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 ._container {
+    width: 100%;
     max-width: 1200px;
     padding: 0 20px;
     margin: 0 auto;
@@ -35,6 +36,21 @@
     left: 0;
     border-radius: 10px;
     background-color: #8A33FD;
+}
+
+._button {
+    display: inline-block;
+    color: rgb(55, 65, 81);
+    font-weight: 700;
+    background-color: #fff;
+    padding: 1rem 4rem;
+    border-radius: 0.25rem;
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+._button:hover {
+    box-shadow: 0 10px 15px -3px #6b7280;
 }
 
 

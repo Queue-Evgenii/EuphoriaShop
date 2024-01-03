@@ -45,15 +45,7 @@ function PreviewSwiper() {
                             href={ item.url }
                             className="
                             absolute
-                            rounded
-                            bg-white
-                            text-gray-700
-                            py-4
-                            px-16
-                            font-bold
-                            hover:shadow-lg
-                            hover:shadow-gray-500
-                            transition
+                            _button
                         "
                         >
                             Shop Now
