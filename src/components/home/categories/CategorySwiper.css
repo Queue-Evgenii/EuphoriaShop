@@ -1,0 +1,30 @@
+._category_slider {
+    padding: 0 38px !important;
+}
+
+._category_slider .swiper-button-next,
+._category_slider .swiper-button-prev {
+    color: #3C4242 !important;
+    height: 100%;
+    top: 0;
+    margin: 0;
+    background-color: #fff;
+}
+._category_slider .swiper-button-prev {
+    left: 0;
+}
+._category_slider .swiper-button-next {
+    right: 0;
+}
+
+._category_slider .swiper-button-prev:after,
+._category_slider .swiper-button-next:after {
+    content: "";
+    width: 14px;
+    height: 12px;
+    background: url("./../../../images/icons/category-swiper-arrow.png") center / 100% no-repeat;
+}
+
+._category_slider .swiper-button-next:after {
+    transform: rotate(180deg);
+}

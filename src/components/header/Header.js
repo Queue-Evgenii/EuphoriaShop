@@ -31,7 +31,7 @@ function Header() {
 
     return (
         <header className="relative">
-            <div className="_container bg-white relative z-10">
+            <div className="_container bg-white relative z-20">
                 <div className="flex space-x-4 items-center justify-between gap-2 py-4">
                     <a href="/" className="min-w-24 max-w-24">
                         <img src={logoIcon} alt="" />
@@ -78,7 +78,7 @@ function Header() {
             </div>
 
             { windowWidth <= 1024 && (
-                <div className={`_container absolute right-0 left-0 bg-gray-100 ${isOpen ? '' : '-translate-y-full'} transition`}>
+                <div className={`_container absolute z-10 right-0 left-0 bg-gray-100 ${isOpen ? '' : '-translate-y-full'} transition`}>
                     <div className="_burger-menu flex flex-col gap-y-4 py-4">
                         { windowWidth <= 768 && (
                             <Search  />
