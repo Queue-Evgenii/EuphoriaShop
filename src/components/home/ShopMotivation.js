@@ -1,5 +1,5 @@
-import image1 from "./../../images/temp/motivation-img-1.png"
-import image2 from "./../../images/temp/motivation-img-2.png"
+import image1 from "../../images/static/motivation-img-1.png"
+import image2 from "../../images/static/motivation-img-2.png"
 
 function ShopMotivation() {
     return (

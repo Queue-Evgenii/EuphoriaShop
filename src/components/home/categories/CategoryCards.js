@@ -7,7 +7,7 @@ function CategoryCards(props) {
         return (
             <div className="grid gap-10 max-[520px]:grid-cols-1 max-[768px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 xl:gap-x-12">
                 { items.map(item => (
-                    <div key={ item.id }>
+                    <div key={ item.id }  className="rounded-lg p-3 transition hover:bg-gray-100">
                         <a href={ item.url } className="rounded-lg overflow-hidden block mb-4">
                             <img src={ item.src } alt="" className="h-full w-full object-cover object-center group-hover:opacity-75"/>
                         </a>

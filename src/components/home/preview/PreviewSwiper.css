@@ -1,10 +1,10 @@
 
-.swiper-button-next,
-.swiper-button-prev {
+._preview-banner .swiper-button-next,
+._preview-banner .swiper-button-prev {
     color: #fff !important;
 }
 
-.swiper-pagination {
+._preview-banner .swiper-pagination {
     width: 33% !important;
     margin: 0 auto !important;
     display: flex;
@@ -16,13 +16,13 @@
     overflow: hidden
 }
 
-.swiper-pagination-bullet {
+._preview-banner .swiper-pagination-bullet {
     background-color: rgba(255, 255, 255, 0.6);
     flex: 1 1 auto;
     height: 10px;
     cursor: pointer;
 }
-.swiper-pagination-bullet-active {
+._preview-banner .swiper-pagination-bullet-active {
     background-color: rgba(255, 255, 255, 1);
 }
 

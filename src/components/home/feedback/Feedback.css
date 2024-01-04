@@ -1,0 +1,10 @@
+
+
+._feedback-swiper .swiper-pagination-bullet {
+    background-color: #3C4242;
+    opacity: 0.3;
+}
+._feedback-swiper .swiper-pagination-bullet-active {
+    background-color: #3C4242;
+    opacity: 1;
+}
