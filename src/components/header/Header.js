@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import Navigation from "./navigation/Navigation";
 import Search from "./search/Search";
@@ -33,9 +34,9 @@ function Header() {
         <header className="relative">
             <div className="_container bg-white relative z-20">
                 <div className="flex space-x-4 items-center justify-between gap-2 py-4">
-                    <a href="/" className="min-w-24 max-w-24">
+                    <Link to="/" className="min-w-24 max-w-24">
                         <img src={logoIcon} alt="" />
-                    </a>
+                    </Link>
                     {windowWidth > 1024 && (
                         <Navigation />
                     )}

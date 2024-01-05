@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 import "./Categories.css";
 
@@ -22,7 +23,7 @@ function Categories(props) {
                 <ul className={ `footer-dropdown flex flex-col gap-y-3 px-8 md:px-16 transition${isOpen ? " _active" : ""}` }>
                     { props.items.map(item => (
                         <li key={ item.id }>
-                            <a href={ item.url } className="inline-block pl-3 text-xl">{ item.title }</a>
+                            <Link to={ `/catalog/${ item.gender }/${ item.categoryId }` } className="inline-block pl-3 text-xl">{ item.title }</Link>
                         </li>
                     ))}
                 </ul>

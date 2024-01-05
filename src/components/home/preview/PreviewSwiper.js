@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -12,17 +13,20 @@ import slideImg3 from "./../../../images/temp/preview-slide-3.png";
 const slides  = [
     {
         id: 0,
-        url: "#",
+        for: "women",
+        categoryId: 1,
         src: slideImg,
     },
     {
         id: 1,
-        url: "#",
+        for: "women",
+        categoryId: 2,
         src: slideImg2,
     },
     {
         id: 2,
-        url: "#",
+        for: "women",
+        categoryId: 3,
         src: slideImg3,
     },
 ];
@@ -41,15 +45,15 @@ function PreviewSwiper() {
                 {slides.map(item => (
                     <SwiperSlide key={ item.id } className="relative z-0">
                         <img src={ item.src } alt="" className="w-full h-full"/>
-                        <a
-                            href={ item.url }
+                        <Link
+                            to={ "/catalog/" + item.for + "/" + item.categoryId }
                             className="
                             absolute
                             _button
                         "
                         >
                             Shop Now
-                        </a>
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>

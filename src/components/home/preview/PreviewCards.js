@@ -1,15 +1,18 @@
+import {Link} from "react-router-dom";
 import slideImg2 from "./../../../images/temp/preview-slide-2.png";
 import slideImg3 from "./../../../images/temp/preview-slide-3.png";
 
 const cards = [
     {
         id: 0,
-        url: "#",
+        gender: "women",
+        categoryId: 4,
         src: slideImg2,
     },
     {
         id: 1,
-        url: "#",
+        gender: "women",
+        categoryId: 5,
         src: slideImg3,
     },
 ];
@@ -20,8 +23,8 @@ function PreviewCards() {
             {cards.map(item => (
                 <div key={ item.id } className="relative rounded-xl overflow-hidden">
                     <img src={ item.src } alt=""/>
-                    <a
-                        href={ item.url }
+                    <Link
+                        to={ `/catalog/${ item.gender }/${ item.categoryId }` }
                         className="
                             absolute
                             text-white
@@ -32,7 +35,7 @@ function PreviewCards() {
                             left-10"
                     >
                         Explore Items
-                    </a>
+                    </Link>
                 </div>
             ))}
         </div>

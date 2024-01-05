@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import {Navigation} from "swiper/modules";
+import {Link} from "react-router-dom";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -15,31 +16,36 @@ const data = {
     data: [
         {
             id: 0,
-            url: "#",
+            gender: "men",
+            categoryId: 7,
             src: slideImg1,
             title: "Knitted Joggers",
         },
         {
             id: 1,
-            url: "#",
+            gender: "men",
+            categoryId: 8,
             src: slideImg2,
             title: "Full Sleeve",
         },
         {
             id: 2,
-            url: "#",
+            gender: "men",
+            categoryId: 9,
             src: slideImg3,
             title: "Active T-Shirts",
         },
         {
             id: 3,
-            url: "#",
+            gender: "women",
+            categoryId: 10,
             src: slideImg4,
             title: "Urban Shirts",
         },
         {
             id: 4,
-            url: "#",
+            gender: "women",
+            categoryId: 11,
             src: slideImg4,
             title: "Urban Shirts 2 best seller for last year",
         },
@@ -60,10 +66,10 @@ function CategorySwiper() {
             >
                 { data.data.map(item => (
                     <SwiperSlide key={ item.id } className="max-w-48 sm:max-w-64">
-                        <a href={ item.url }>
+                        <Link to={ `/catalog/${ item.gender }/${ item.categoryId }` }>
                             <img src={ item.src } alt="" className="mb-8"/>
                             <h3 className="text-xl font-bold">{ item.title }</h3>
-                        </a>
+                        </Link>
                     </SwiperSlide>
                 )) }
             </Swiper>
