@@ -1,0 +1,15 @@
+
+.footer-dropdown {
+    transform: translate(0, -150%);
+    height: 0;
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.footer-dropdown._active {
+    transform: translate(0, 0);
+    height: auto;
+    padding-top: 1rem;
+    padding-bottom: 4rem;
+}
