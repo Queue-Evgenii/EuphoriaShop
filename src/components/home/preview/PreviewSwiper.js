@@ -9,6 +9,7 @@ import "./PreviewSwiper.css";
 import slideImg from "./../../../images/temp/preview-slide.png";
 import slideImg2 from "./../../../images/temp/preview-slide-2.png";
 import slideImg3 from "./../../../images/temp/preview-slide-3.png";
+import {Component} from "react";
 
 const slides  = [
     {
@@ -31,34 +32,36 @@ const slides  = [
     },
 ];
 
-function PreviewSwiper() {
-    return (
-        <div className="hidden md:block">
-            <Swiper
-                loop={true}
-                autoHeight={true}
-                modules={[ Navigation, Pagination ]}
-                navigation={true}
-                pagination={{ clickable: true }}
-                className="_preview-banner"
-            >
-                {slides.map(item => (
-                    <SwiperSlide key={ item.id } className="relative z-0">
-                        <img src={ item.src } alt="" className="w-full h-full"/>
-                        <Link
-                            to={ "/catalog/" + item.for + "/" + item.categoryId }
-                            className="
+class PreviewSwiper extends Component {
+    render () {
+        return (
+            <div className="hidden md:block">
+                <Swiper
+                    loop={true}
+                    autoHeight={true}
+                    modules={[ Navigation, Pagination ]}
+                    navigation={true}
+                    pagination={{ clickable: true }}
+                    className="_preview-banner"
+                >
+                    {slides.map(item => (
+                        <SwiperSlide key={ item.id } className="relative z-0">
+                            <img src={ item.src } alt="" className="w-full h-full"/>
+                            <Link
+                                to={ "/catalog/" + item.for + "/" + item.categoryId }
+                                className="
                             absolute
                             _button
                         "
-                        >
-                            Shop Now
-                        </Link>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </div>
-    );
+                            >
+                                Shop Now
+                            </Link>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
+        );
+    }
 }
 
 export default PreviewSwiper;

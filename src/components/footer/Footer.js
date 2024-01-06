@@ -1,5 +1,6 @@
 import Navigation from "../footer/navigation/Navigation";
 import Social from "./social/Social";
+import Categories from "./categories/Categories";
 
 import facebook from "./../../images/icons/facebook.svg";
 import inst from "./../../images/icons/inst.svg";
@@ -7,7 +8,9 @@ import twitter from "./../../images/icons/twitter.svg";
 import linkedin from "./../../images/icons/linkedin.svg";
 import gPlay from "./../../images/icons/gPlay.svg";
 import appStore from "./../../images/icons/appStore.svg";
-import Categories from "./categories/Categories";
+
+import { Component } from "react";
+import store from "./../../store/index";
 
 const navItems = [
     {
@@ -164,76 +167,33 @@ const socials = [
         ]
     },
 ];
-const categories = [
-    {
-        id: 0,
-        title: "category 1",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 1,
-        title: "category 2",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 2,
-        title: "category asd asd",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 3,
-        title: "category 3",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 4,
-        title: "category 4 big",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 5,
-        title: "category very big",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 6,
-        title: "category 6",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 7,
-        title: "category 7",
-        gender: "women",
-        categoryId: 19,
-    },
-    {
-        id: 8,
-        title: "category 8",
-        gender: "women",
-        categoryId: 19,
-    },
-];
 
-function Footer() {
-  return (
-    <footer className="flex flex-col gap-y-12" style={{ background: "#3C4242", padding: "60px 0 20px 0", color: "#f6f6f6", }}>
-        <Navigation items={ navItems } />
-        <Social items={ socials } />
-        <div>
-            <Categories items={ categories } />
-            <div className="_container text-center">
-                <span className="font-bold inline-block py-8">Copyright © { new Date().getFullYear() } Euphoria Folks Pvt Ltd. All rights reserved.</span>
-            </div>
-        </div>
-    </footer>
-  );
+class Footer extends Component {
+    state = {
+        categories: [],
+    };
+    componentDidMount() {
+        store.subscribe(() => {
+            this.setState({
+                categories: store.getState().categories,
+            });
+        });
+    };
+
+    render() {
+        return (
+            <footer className="flex flex-col gap-y-12" style={{ background: "#3C4242", padding: "60px 0 20px 0", color: "#f6f6f6", }}>
+                <Navigation items={ navItems } />
+                <Social items={ socials } />
+                <div>
+                    <Categories items={ this.state.categories } />
+                    <div className="_container text-center">
+                        <span className="font-bold inline-block py-8">Copyright © { new Date().getFullYear() } Euphoria Folks Pvt Ltd. All rights reserved.</span>
+                    </div>
+                </div>
+            </footer>
+        );
+    }
 }
 
 export default Footer;
