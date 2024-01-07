@@ -1,15 +1,13 @@
+import { useEffect, useState } from "react";
 import Navigation from "../footer/navigation/Navigation";
 import Social from "./social/Social";
 import Categories from "./categories/Categories";
-
 import facebook from "./../../images/icons/facebook.svg";
 import inst from "./../../images/icons/inst.svg";
 import twitter from "./../../images/icons/twitter.svg";
 import linkedin from "./../../images/icons/linkedin.svg";
 import gPlay from "./../../images/icons/gPlay.svg";
 import appStore from "./../../images/icons/appStore.svg";
-
-import { Component } from "react";
 import store from "./../../store/index";
 
 const navItems = [
@@ -123,6 +121,7 @@ const navItems = [
         ],
     },
 ];
+
 const socials = [
     {
         id: 0,
@@ -168,32 +167,31 @@ const socials = [
     },
 ];
 
-class Footer extends Component {
-    state = {
-        categories: [],
-    };
-    componentDidMount() {
-        store.subscribe(() => {
-            this.setState({
-                categories: store.getState().categories,
-            });
-        });
-    };
+const Footer = () => {
+    const [categories, setCategories] = useState([]);
 
-    render() {
-        return (
-            <footer className="flex flex-col gap-y-12" style={{ background: "#3C4242", padding: "60px 0 20px 0", color: "#f6f6f6", }}>
-                <Navigation items={ navItems } />
-                <Social items={ socials } />
-                <div>
-                    <Categories items={ this.state.categories } />
-                    <div className="_container text-center">
-                        <span className="font-bold inline-block py-8">Copyright © { new Date().getFullYear() } Euphoria Folks Pvt Ltd. All rights reserved.</span>
-                    </div>
+    useEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setCategories(store.getState().categories);
+        });
+
+        return () => {
+            unsubscribe();
+        };
+    }, []);
+
+    return (
+        <footer className="flex flex-col gap-y-12" style={{ background: "#3C4242", padding: "60px 0 20px 0", color: "#f6f6f6", }}>
+            <Navigation items={navItems} />
+            <Social items={socials} />
+            <div>
+                <Categories items={categories} />
+                <div className="_container text-center">
+                    <span className="font-bold inline-block py-8">Copyright © {new Date().getFullYear()} Euphoria Folks Pvt Ltd. All rights reserved.</span>
                 </div>
-            </footer>
-        );
-    }
-}
+            </div>
+        </footer>
+    );
+};
 
 export default Footer;

@@ -1,22 +1,19 @@
-import {Link} from "react-router-dom";
-import {Component} from "react";
+import { NavLink } from "react-router-dom";
 
-
-class Navigation extends Component {
-    render() {
-        return (
-            <nav className="flex gap-4 items-center _nav">
-                { this.props.items && this.props.items.map((item) => (
-                    <Link
-                        key={ item.id }
-                        to={ item.url }
-                    >
-                        {item.name}
-                    </Link>
-                ))}
-            </nav>
-        );
-    }
-}
+const Navigation = ({ items }) => {
+    return (
+        <nav className="flex gap-4 items-center _nav">
+            {items && items.map((item) => (
+                <NavLink
+                    key={item.id}
+                    to={item.url}
+                    className={(el) => (el.isActive ? 'font-bold' : '')}
+                >
+                    {item.name}
+                </NavLink>
+            ))}
+        </nav>
+    );
+};
 
 export default Navigation;

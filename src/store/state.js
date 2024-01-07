@@ -1,3 +1,5 @@
 export const defaultState = {
-    categories: [],
+    categories: null,
+    womenCategories: null,
+    menCategories: null,
 };

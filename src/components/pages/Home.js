@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import PreviewSwiper from "./../home/preview/PreviewSwiper";
 import PreviewCards from "./../home/preview/PreviewCards";
 import CategorySwiper from "./../home/categories/CategorySwiper";
@@ -7,9 +8,11 @@ import Brands from "../home/brands/Brands";
 import ProductsList from "../general/products/ProductsList";
 import Feedback from "../home/feedback/Feedback";
 
-import { Component } from "react";
 import store from "../../store/index";
-import { setCategoriesToStore } from "../../store/actions/categories"
+import {
+    setWomenCategoriesToStore,
+    setMenCategoriesToStore
+} from "../../store/actions/categories";
 import { getCategories } from "../../api/categories";
 
 import productImg1 from "./../../images/temp/product-img-1.png";
@@ -92,72 +95,70 @@ const feedbacks = [
     },
 ];
 
-class Home extends Component {
-    state = {
-        menCategories: [],
-        womenCategories: [],
-        newCategories: [],
-    }
+const Home = () => {
+    const [newCategories, setNewCategories] = useState([]);
+    const [womenCategories, setWomenCategories] = useState([]);
+    const [menCategories, setMenCategories] = useState([]);
 
-    componentDidMount() {
-        getCategories("men")
-            .then(res => {
-                this.setState({
-                    menCategories: res.data,
-                })
+    const setNewCategoriesToState = () => {
+        if (store.getState().categories !== null) {
+            setNewCategories(
+                store.getState().categories.filter(item => item.isNewArrival === true)
+            );
+        }
+    };
+
+    const setCategoriesToState = (gender, action, setCategories) => {
+        if (store.getState()[`${gender}Categories`] === null) {
+            getCategories(gender).then(res => {
+                setCategories(res.data);
+                store.dispatch(action(res.data));
             });
+        } else {
+            setCategories(store.getState()[`${gender}Categories`]);
+        }
+    };
 
-        getCategories("women")
-            .then(res => {
-                this.setState({
-                    womenCategories: res.data,
-                })
-            });
+    useEffect(() => {
+        setCategoriesToState("men", setMenCategoriesToStore, setMenCategories);
+        setCategoriesToState("women", setWomenCategoriesToStore, setWomenCategories);
 
-        getCategories("")
-            .then(res => {
-                this.setState({
-                    newCategories: res.data.filter(item => item.isNewArrival === true),
-                })
-                store.dispatch(setCategoriesToStore(res.data));
-            });
-    }
+        setNewCategoriesToState();
+        store.subscribe(setNewCategoriesToState);
+    }, []);
 
-    render() {
-        return (
-            <main>
-                { this.data }
-                <div className="max-w-screen-xl m-auto flex flex-col gap-y-16 lg:gap-y-24">
-                    <PreviewSwiper />
-                    <PreviewCards />
-                    { this.state.newCategories.length > 0 && <CategorySwiper items={ this.state.newCategories } /> }
-                    <ShopMotivation />
-                    { this.state.menCategories.length > 0 && (
-                        <div className="_container">
-                            <h2 className="_title mb-16">Categories For Men</h2>
-                            <CategoryCards items={ this.state.menCategories } per="8" />
-                        </div>
-                    )}
-                    { this.state.womenCategories.length > 0 && (
-                        <div className="_container">
-                            <h2 className="_title mb-16">Categories For Women</h2>
-                            <CategoryCards items={ this.state.womenCategories } per="8" />
-                        </div>
-                    )}
-                    <Brands />
+    return (
+        <main>
+            <div className="max-w-screen-xl m-auto flex flex-col gap-y-16 lg:gap-y-24">
+                <PreviewSwiper />
+                <PreviewCards />
+                { newCategories.length > 0 && <CategorySwiper items={ newCategories } /> }
+                <ShopMotivation />
+                { menCategories && menCategories.length > 0 && (
                     <div className="_container">
-                        <h2 className="_title mb-16">In The Limelight</h2>
-                        <ProductsList items={limelightProducts} per="4"/>
+                        <h2 className="_title mb-16">Categories For Men</h2>
+                        <CategoryCards items={ menCategories } per="8" />
                     </div>
+                )}
+                { womenCategories && womenCategories.length > 0 && (
                     <div className="_container">
-                        <h2 className="_title mb-16">Feedback</h2>
-                        <Feedback items={feedbacks} />
+                        <h2 className="_title mb-16">Categories For Women</h2>
+                        <CategoryCards items={ womenCategories } per="8" />
                     </div>
-                    <div></div>
+                )}
+                <Brands />
+                <div className="_container">
+                    <h2 className="_title mb-16">In The Limelight</h2>
+                    <ProductsList items={limelightProducts} per="4"/>
                 </div>
-            </main>
-        );
-    }
+                <div className="_container">
+                    <h2 className="_title mb-16">Feedback</h2>
+                    <Feedback items={feedbacks} />
+                </div>
+                <div></div>
+            </div>
+        </main>
+    );
 }
 
 export default Home;
