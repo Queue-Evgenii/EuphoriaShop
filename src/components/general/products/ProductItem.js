@@ -1,6 +1,6 @@
 const ProductItem = ({ item }) => {
     return (
-        <a href={item.url} className="rounded-lg p-3 transition hover:bg-gray-100">
+        <a href={item.url} className="rounded-lg p-3 transition hover:bg-gray-100 cursor-pointer">
             <div className="rounded-lg overflow-hidden mb-4 relative">
                 <img src={ item.preview } alt="" className="h-full w-full object-cover object-center" />
                 <button className="absolute top-5 right-4">

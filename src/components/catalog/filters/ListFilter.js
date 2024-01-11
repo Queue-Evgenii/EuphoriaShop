@@ -1,31 +1,24 @@
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 
 const ListFilter = ({ items, emitEvent }) => {
     const [array, setArray] = useState(null);
 
-    const setArrayToState = useCallback(() => {
-        if (!items) return;
-
-        setArray(items);
-    }, [items]);
-
     const emitData = (item) => {
-        const newArray = [ ...array ];
-        newArray.forEach(el => {
+        array.forEach(el => {
             if (el.id === item.id) el.current = !el.current;
         })
 
-        setArray(newArray);
-        emitEvent(newArray.filter(el => el.current === true));
+        emitEvent(array);
     };
 
 
     useEffect(() => {
-        setArrayToState();
-    }, [setArrayToState, items]);
+        if (!items) return;
+        setArray(JSON.parse(JSON.stringify(items)));
+    }, [items]);
 
     return (
-        <ul className="flex flex-col gap-y-4 py-4">
+        <ul className="flex flex-col gap-y-4 py-8 px-4">
             {array != null && array.map(item => (
                 <li
                     key={item.id}

@@ -21,6 +21,7 @@ const Dropdown = (props) => {
         const titleElement = accordionTitleRef.current;
         const menuElement = titleElement ? titleElement.nextElementSibling : null;
 
+
         if (titleElement) titleElement.classList.remove("_active");
         if (menuElement && menuElement.style.maxHeight) menuElement.style.maxHeight = null;
     }, [props]);

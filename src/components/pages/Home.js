@@ -9,10 +9,7 @@ import ProductsList from "../general/products/ProductsList";
 import Feedback from "../home/feedback/Feedback";
 
 import store from "../../store/index";
-import {
-    setWomenCategoriesToStore,
-    setMenCategoriesToStore
-} from "../../store/actions/categories";
+import { setWomenCategoriesToStore, setMenCategoriesToStore } from "../../store/actions/categories";
 import { getCategories } from "../../api/categories";
 
 import productImg1 from "./../../images/temp/product-img-1.png";

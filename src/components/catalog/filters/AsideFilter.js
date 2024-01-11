@@ -1,17 +1,34 @@
-import { useEffect } from "react";
 import ListFilter from "./ListFilter";
 import PriceFilter from "./PriceFilter";
 import ColorsFilter from "./ColorsFilter";
 import SizeFilter from "./SizeFilter";
 import Dropdown from "../../general/dropdown/Dropdown";
 
-const AsideFilter = ({ categories, categoriesEmitEvent }) => {
-    useEffect(() => {
-
-    }, []);
+const AsideFilter = (
+    {
+        categories,
+        categoriesEmitEvent,
+        styles,
+        stylesEmitEvent,
+        colors,
+        colorsEmitEvent,
+        sizes,
+        sizesEmitEvent
+    }) => {
 
     const handleCategoriesEmit = (data) => {
         categoriesEmitEvent(data);
+    };
+
+    const handleStylesEmit = (data) => {
+        stylesEmitEvent(data);
+    };
+
+    const handleColorsEmit = (data) => {
+        colorsEmitEvent(data);
+    };
+    const handleSizesEmit = (data) => {
+        sizesEmitEvent(data);
     };
 
     return (
@@ -24,7 +41,7 @@ const AsideFilter = ({ categories, categoriesEmitEvent }) => {
             </header>
             <div className="py-6">
                 <Dropdown title="Categories">
-                    <ListFilter emitEvent={handleCategoriesEmit} items={categories} />
+                    <ListFilter emitEvent={ handleCategoriesEmit } items={ categories } />
                 </Dropdown>
             </div>
             <div className="py-6">
@@ -32,19 +49,19 @@ const AsideFilter = ({ categories, categoriesEmitEvent }) => {
                     <PriceFilter />
                 </Dropdown>
             </div>
-            <div className="py-6">
+            <div className="py-6" style={{ display: colors.length > 0 ? "block" : "none" }}>
                 <Dropdown title="Colors">
-                    <ColorsFilter />
+                    <ColorsFilter items={ colors } emitEvent={ handleColorsEmit } />
                 </Dropdown>
             </div>
-            <div className="py-6">
+            <div className="py-6" style={{ display: sizes.length > 0 ? "block" : "none" }}>
                 <Dropdown title="Size">
-                    <SizeFilter />
+                    <SizeFilter items={ sizes } emitEvent={ handleSizesEmit } />
                 </Dropdown>
             </div>
-            <div className="py-6">
+            <div className="py-6" style={{ display: styles.length > 0 ? "block" : "none" }}>
                 <Dropdown title="Dress Style">
-                    <ListFilter />
+                    <ListFilter emitEvent={ handleStylesEmit } items={ styles }/>
                 </Dropdown>
             </div>
         </div>

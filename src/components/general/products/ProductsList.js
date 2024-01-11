@@ -7,8 +7,8 @@ const ProductsList = ({ items, per, gridStyle }) => {
 
         return (
             <div className={`grid gap-10 xl:gap-x-12 ${ gridStyle ? gridStyle : "max-[520px]:grid-cols-1 max-[768px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"}`}>
-                {displayedItems.map(item => (
-                    <ProductItem key={item.productId} item={item} />
+                {displayedItems.map((item, index) => (
+                    <ProductItem key={item.productId + index} item={item} />
                 ))}
             </div>
         );
