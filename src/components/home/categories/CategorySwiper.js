@@ -22,7 +22,7 @@ const CategorySwiper = ({ items }) => {
                     items.map((item) => (
                         <SwiperSlide key={item.categoryId} className="max-w-48 sm:max-w-64">
                             <Link to={`/catalog/${item.gender}/${item.categoryId}`}>
-                                <img src={item.image} alt="" className="mb-8" />
+                                <img src={item.image} alt="" className="mb-8 rounded-lg" />
                                 <h3 className="text-xl font-bold">{item.name}</h3>
                             </Link>
                         </SwiperSlide>

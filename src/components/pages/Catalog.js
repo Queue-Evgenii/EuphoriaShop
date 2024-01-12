@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import store from "../../store";
 import { getCategories } from "../../api/categories";
 import { getProducts } from "../../api/products";
@@ -15,6 +15,8 @@ const Catalog = () => {
     const [styles, setStyles] = useState([]);
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
+    const [min, setMin] = useState(0);
+    const [max, setMax] = useState(0);
 
 
     const getFilteredProducts = useCallback(() => {
@@ -24,7 +26,7 @@ const Catalog = () => {
             .then(res => {
                 setProducts(res.data);
             });
-    }, [categories, styles, colors, sizes]);
+    }, [categories, styles, colors, sizes, min, max]);
     const getFilter = () => {
         const filters = [ `gender=${gender}` ];
         categories.forEach(item => {
@@ -48,6 +50,7 @@ const Catalog = () => {
                 filters.push(`sizes[]='${item.name}'`);
             }
         });
+        filters.push(`min=${min}&max=${max}`);
         return filters;
     }
 
@@ -57,6 +60,8 @@ const Catalog = () => {
                 setArrayToState(res.data.styles, setStyles);
                 setArrayToState(res.data.sizes, setSizes);
                 setColorsToState(res.data.colors);
+                setMin(res.data.min);
+                setMax(res.data.max);
             });
     }, [gender]);
 
@@ -144,10 +149,14 @@ const Catalog = () => {
     const handleSizesEmit = (data) => {
         setSizes(data);
     }
+    const handlePriceEmit = (data) => {
+        setMin(data.min);
+        setMax(data.max);
+    }
 
     return (
         <main className="max-w-screen-xl m-auto flex flex-col gap-y-16 lg:gap-y-24">
-            <div className="flex gap-x-12 _container">
+            <div className="flex flex-col gap-x-12 _container md:flex-row">
                 <aside className="flex-[0_0_20%]">
                     <AsideFilter
                         params={{ gender }}
@@ -155,15 +164,31 @@ const Catalog = () => {
                         styles={ styles }
                         colors={ colors }
                         sizes={ sizes }
+                        min={ min }
+                        max={ max }
                         categoriesEmitEvent={ handleCategoriesEmit }
                         stylesEmitEvent={ handleStylesEmit }
                         colorsEmitEvent={ handleColorsEmit }
                         sizesEmitEvent={ handleSizesEmit }
+                        priceEmitEvent={ handlePriceEmit }
                     />
                 </aside>
                 <div className="flex-1">
-                    <div className="py-12">{ gender + " " + id }</div>
-                    <ProductsList items={ products } gridStyle="max-[678px]:grid-cols-1 min-[679px]:grid-cols-2 lg:grid-cols-3"/>
+                    <div className="py-8 pl-4 text-3xl font-bold">{ gender.toLocaleUpperCase() + "`s Clothing" }</div>
+                    { products && products.length > 0 ? (<ProductsList items={ products } gridStyle="min-[500px]:grid-cols-2 lg:grid-cols-3"/>) : (<div>Nothing found!</div>)}
+
+                </div>
+            </div>
+            <div className="_container flex flex-col gap-y-6 text-gray-500">
+                <h2 className="_title mb-4">Clothing for Women Online in India</h2>
+                <div className="pl-8 flex flex-col gap-y-6">
+                    <h3 className="font-bold text-xl">Reexplore Women's Clothing Collection Online at Euphoria</h3>
+                    <p className="text-xl">Women's Clothing – Are you searching for the best website to buy Clothing for Women online in India? Well, your search for the coolest and most stylish womens clothing ends here. From trendy Casual Womens Wear Online shopping to premium quality cotton women's apparel, <Link to="/" className="font-bold">Euphoria</Link> has closet of Women Collection covered with the latest and best designs of Women's Clothing Online.</p>
+                    <p className="text-xl">Our collection of clothes for women will make you the trendsetter with an iconic resemblance of choice in Womens Wear. </p>
+                    <h3 className="font-bold text-xl">One-Stop Destination to Shop Every Clothing for Women: Euphoria</h3>
+                    <p className="text-xl">Today, Clothing for Women is gaining more popularity above all. This is because gone are the days when women were used to carrying uncomfortable fashion. Today, a lady looks prettier when she is in Casual Womens Wear which is a comfortable outfit. Concerning this, <Link to="/" className="font-bold">Euphoria</Link> has a big fat range of Stylish Women's Clothing that would make her the winner wherever she goes. </p>
+                    <p className="text-xl">Our collection of clothes for women will make you the trendsetter with an iconic resemblance of choice in Womens Wear. It is quite evident to say that there are very few Womens Clothing online stores where you can buy Western Wear for Women comprising the premium material and elegant design that you are always seeking for. Basically, </p>
+                    <a href="/" className="font-bold text-xl">See More</a>
                 </div>
             </div>
             <div></div>

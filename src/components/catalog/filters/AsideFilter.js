@@ -13,7 +13,9 @@ const AsideFilter = (
         colors,
         colorsEmitEvent,
         sizes,
-        sizesEmitEvent
+        sizesEmitEvent,
+        min, max,
+        priceEmitEvent
     }) => {
 
     const handleCategoriesEmit = (data) => {
@@ -29,6 +31,9 @@ const AsideFilter = (
     };
     const handleSizesEmit = (data) => {
         sizesEmitEvent(data);
+    };
+    const handlePriceEmit = (data) => {
+        priceEmitEvent(data);
     };
 
     return (
@@ -46,7 +51,7 @@ const AsideFilter = (
             </div>
             <div className="py-6">
                 <Dropdown title="Price">
-                    <PriceFilter />
+                    <PriceFilter min={ min } max={ max } emitEvent={ handlePriceEmit } />
                 </Dropdown>
             </div>
             <div className="py-6" style={{ display: colors.length > 0 ? "block" : "none" }}>

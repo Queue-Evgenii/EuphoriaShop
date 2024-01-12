@@ -1,0 +1,30 @@
+.price-slider {
+    padding: 15px 5px;
+}
+.price-slider .slider {
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
+.price-slider .track {
+    height: 3px;
+    background-color: #B3B1B2;
+    border-radius: 4px;
+}
+.price-slider .track-1 {
+    background-color: #8A33FD;
+}
+.price-slider .thumb {
+    border-radius: 50%;
+    background-color: #8A33FD;
+    height: 16px;
+    width: 16px;
+}
+.price-slider #min-input,
+.price-slider #max-input {
+    max-width: 97px;
+    border: 1px solid rgba(190, 188, 189, 1);
+    color: rgba(60, 66, 66, 1);
+    padding: 8px 16px;
+    text-align: center;
+}
