@@ -1,6 +1,8 @@
+import {Link} from "react-router-dom";
+
 const ProductItem = ({ item }) => {
     return (
-        <a href={item.url} className="rounded-lg p-3 transition hover:bg-gray-100 cursor-pointer">
+        <Link to={ `/product/${item.productId}` } className="rounded-lg p-3 transition hover:bg-gray-100 cursor-pointer">
             <div className="rounded-lg overflow-hidden mb-4 relative">
                 <img src={ item.preview } alt="" className="h-full w-full object-cover object-center" />
                 <button className="absolute top-5 right-4">
@@ -17,7 +19,7 @@ const ProductItem = ({ item }) => {
                 </div>
                 <div className="text-lg font-bold py-2 px-4 rounded-lg h-min" style={{ background: "#F6F6F6" }}>{ "$" + item.price }</div>
             </div>
-        </a>
+        </Link>
     );
 };
 
