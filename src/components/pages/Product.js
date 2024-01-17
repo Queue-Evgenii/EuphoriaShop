@@ -1,7 +1,9 @@
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getProduct} from "../../api/product";
 import ProductMenu from "../product/ProductMenu";
+import store from "../../store";
+import Popup from "../general/popup/Popup";
 
 
 const Product = () => {
@@ -9,13 +11,13 @@ const Product = () => {
     const [product, setProduct] = useState(null);
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
+    const [popupIsActive, togglePopup] = useState(false);
 
     const setColorsByCurrentSize = (sizeArray, productEl) => {
         const newColors = [];
         let current = null;
 
         sizeArray.forEach(item => {
-            console.log(item);
             if (item.current) current = item.size;
         });
 
@@ -28,8 +30,6 @@ const Product = () => {
             }
         });
         if (newColors.length > 0) newColors[0].current = true;
-
-        console.log(newColors);
 
         setColors(newColors);
     };
@@ -107,8 +107,9 @@ const Product = () => {
                                     </a>
                                 </header>
                                 <ul className="flex items-center gap-x-5">
-                                    { sizes.map(item => (
+                                    { sizes.map((item, index) => (
                                         <li
+                                            key={ index }
                                             className="
                                                 px-2
                                                 py-1
@@ -131,8 +132,10 @@ const Product = () => {
                                     <h5 className="font-bold">Colours Available</h5>
                                 </header>
                                 <ol className="flex items-center gap-x-3">
-                                    { colors.map(item => (
-                                        <li className="
+                                    { colors.map((item, index) => (
+                                        <li
+                                            key={ index }
+                                            className="
                                                 mt-3
                                                 p-0.5
                                                 rounded-full"
@@ -145,7 +148,14 @@ const Product = () => {
                                 </ol>
                             </div>
                             <div className="flex gap-8">
-                                <button className="py-3 px-8 flex items-center gap-x-4 rounded-lg" style={{ backgroundColor: "#8A33FD", }}>
+                                <button
+                                    className="py-3 px-8 flex items-center gap-x-4 rounded-lg"
+                                    style={{ backgroundColor: "#8A33FD", }}
+                                    onClick={
+                                        store.getState().me !== null
+                                            ? () => { console.log("not implemented") }
+                                            : () => { togglePopup(true); window.scrollTo(0, 0); } }
+                                >
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.5 3.33334H3.00526C3.85578 3.33334 4.56986 3.97375 4.6621 4.81926L5.3379 11.0141C5.43014 11.8596 6.14422 12.5 6.99474 12.5H14.205C14.9669 12.5 15.6317 11.9834 15.82 11.2452L16.9699 6.73592C17.2387 5.68212 16.4425 4.65741 15.355 4.65741H5.5M5.52063 15.5208H6.14563M5.52063 16.1458H6.14563M14.6873 15.5208H15.3123M14.6873 16.1458H15.3123M6.66667 15.8333C6.66667 16.2936 6.29357 16.6667 5.83333 16.6667C5.3731 16.6667 5 16.2936 5 15.8333C5 15.3731 5.3731 15 5.83333 15C6.29357 15 6.66667 15.3731 6.66667 15.8333ZM15.8333 15.8333C15.8333 16.2936 15.4602 16.6667 15 16.6667C14.5398 16.6667 14.1667 16.2936 14.1667 15.8333C14.1667 15.3731 14.5398 15 15 15C15.4602 15 15.8333 15.3731 15.8333 15.8333Z" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                                     </svg>
@@ -197,6 +207,23 @@ const Product = () => {
                     </div>
                 </>
             )}
+
+            <Popup title="Add to cart" isActive={ popupIsActive } onPopupClose={ () => togglePopup(false) }>
+                <div className="px-4 py-8 flex flex-col items-center text-center">
+                    <h2 className="text-4xl font-semibold mb-2">Not authorized!</h2>
+                    <div className="mb-8">
+                        <h3 className="text-3xl font-semibold">Please authorize for add to cart!</h3>
+                        <span className="text-2xl">It takes only a few minutes</span>
+                    </div>
+                    <Link
+                        to="/me"
+                        className="py-3 px-8 flex items-center justify-center gap-x-4 rounded-lg max-w-48"
+                        style={{ backgroundColor: "#8A33FD", }}
+                    >
+                        <span className="text-white">Let`s authorize!</span>
+                    </Link>
+                </div>
+            </Popup>
         </div>
     );
 }

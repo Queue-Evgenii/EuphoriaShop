@@ -3,4 +3,5 @@ export const defaultState = {
     womenCategories: null,
     menCategories: null,
     productsMeta: null,
+    me: null,
 };

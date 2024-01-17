@@ -9,6 +9,7 @@ import Product from "./components/pages/Product";
 import store from "./store";
 import {getCategories} from "./api/categories";
 import {setCategoriesToStore} from "./store/actions/categories";
+import Account from "./components/pages/Account";
 
 const App = () => {
     useEffect(() => {
@@ -27,6 +28,7 @@ const App = () => {
                     <Route path="/catalog/:gender/:id" element={<Catalog />} />
                     <Route path="/catalog/:gender" element={<Catalog />} />
                     <Route path="/product/:id" element={<Product />} />
+                    <Route path="/me" element={<Account />} />
                 </Routes>
                 <Footer />
             </Router>

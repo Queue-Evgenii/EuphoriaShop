@@ -1,27 +1,88 @@
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 const ProductMenu = ({ product }) => {
     const [currentMenu, setCurrentMenu] = useState("description");
+    const [tableDescription, setTable] = useState([]);
+
+    useEffect(() => {
+        const arr = [];
+
+        arr.push({
+            name: "Fabric",
+            value: product.fabric,
+        });
+        arr.push({
+            name: "Pattern",
+            value: product.pattern,
+        });
+        arr.push({
+            name: "Fit",
+            value: product.fit,
+        });
+        arr.push({
+            name: "Neck",
+            value: product.neck
+        });
+        arr.push({
+            name: "Sleeve",
+            value: product.sleeve,
+        });
+        arr.push({
+            name: "Style",
+            value: product.style,
+        });
+
+        setTable(arr);
+    }, [product])
 
     const GetMenu = useCallback(() => {
         switch (currentMenu) {
             case "description":
                 return (
                     <div>
-                        <p>{ product.description }</p>
-                        <ul>
-                            <li className="grid grid-cols-3"></li>
+                        <p className="text-xl mb-6">{ product.description }</p>
+                        <ul className="grid grid-cols-3 rounded-lg overflow-hidden" style={{ background: "#F6F6F6", }}>
+                            { tableDescription.map(item => (
+                                <li key={ item.name } className="p-4" style={{ borderBottom: "1px solid #E2E1E2", borderRight: "1px solid #E2E1E2" }}>
+                                    <h5 className="text-gray-500">{ item.name }</h5>
+                                    <p>{ item.value }</p>
+                                </li>
+                            )) }
                         </ul>
                     </div>
                 );
             case "comments":
-                return (<div></div>);
+                return (
+                    <div className="flex flex-col gap-y-5">
+                        <header className="flex gap-x-6">
+                            <div className="w-8 h-8 rounded-full overflow-hidden mb-3">
+                                <img src="" alt="" className="w-full h-full object-contain object-center" />
+                            </div>
+                            <h2 className="text-xl font-bold">Username 1</h2>
+                        </header>
+                        <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam dolorem error, est facilis hic itaque quod reiciendis rerum vero!</p>
+                    </div>
+                );
             case "qna":
-                return (<div></div>);
+                return (
+                    <div className="flex flex-col gap-y-5">
+                        <header className="flex gap-x-6">
+                            <div className="w-8 h-8 rounded-full overflow-hidden mb-3">
+                                <img src="" alt="" className="w-full h-full object-contain object-center" />
+                            </div>
+                            <h2 className="text-xl font-bold">Username 1</h2>
+                        </header>
+                        <p className="text-xl">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus, dolor illo praesentium quibusdam quos?</p>
+                        <footer className="pl-12 ">
+                            <h2 className="text-xl font-bold">Username 2</h2>
+                            <p className="text-xl">Lorem ipsum dolor sit amet.</p>
+                        </footer>
+                    </div>
+                );
             default:
                 return (<div>Something went wrong!</div>);
         }
-    }, [currentMenu]);
+    }, [currentMenu, tableDescription]);
 
     const values = [
         {
@@ -60,7 +121,9 @@ const ProductMenu = ({ product }) => {
                     </button>
                 )) }
             </header>
-            { GetMenu() }
+            <div style={{  maxHeight: "300px", overflow: "scroll", marginBottom: "100px" }}>
+                { GetMenu() }
+            </div>
         </div>
     );
 }

@@ -1,0 +1,38 @@
+
+.popup {
+    transform: scale(0);
+    width: 0;
+    height: 0;
+    transition: all 0.2s ease;
+}
+.popup._active {
+    transform: scale(1);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(129, 129, 129, 0.4);
+    overflow: hidden;
+}
+.popup._active .popup__container {
+    background-color: #fff;
+    width: 70%;
+}
+
+.popup .popup__header {
+    position: relative;
+}
+.popup .popup__header span {
+    position: absolute;
+    width: 35%;
+    height: 2px;
+    background-color: rgba(129, 129, 129, 0.9);
+    bottom: 0;
+    left: 0;
+}
+.popup .popup__body {
+    overflow-y: auto;
+}
