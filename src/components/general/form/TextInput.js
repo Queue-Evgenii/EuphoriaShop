@@ -2,64 +2,11 @@
 import "./TextInput.css";
 import {Link} from "react-router-dom";
 
-const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus }) => {
+const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus, errors, initValue, readonly }) => {
     if (!id) {
         throw new DOMException("Invalid prop id", "Invalid data");
     }
 
-    const getMarkup = () => {
-        switch (type) {
-            case "dropdown":
-                return (<div></div>);
-            case "text":
-                return (
-                    <input
-                        type="text"
-                        name={ id }
-                        id={ id }
-                        placeholder={ placeholder ? placeholder : "" }
-                        onChange={ onChange }
-                        onBlur={ onBlur }
-                        onFocus={ onFocus }
-                        className="py-3 px-6 rounded"
-                        style={{ backgroundColor: "#F6F6F6", }}
-                    />
-                );
-            case "email":
-                return (
-                    <input
-                        type="email"
-                        name={ id }
-                        id={ id }
-                        placeholder={ placeholder ? placeholder : "" }
-                        onChange={ onChange }
-                        onBlur={ onBlur }
-                        onFocus={ onFocus }
-                        className="py-3 px-6 rounded"
-                        style={{ backgroundColor: "#F6F6F6", }}
-                    />
-                );
-            case "password":
-                return (
-                    <>
-                        <input
-                            type="password"
-                            name={ id }
-                            id={ id }
-                            placeholder={ placeholder ? placeholder : "" }
-                            onChange={ onChange }
-                            onBlur={ onBlur }
-                            onFocus={ onFocus }
-                            className="py-3 px-6 rounded _password"
-                            style={{ backgroundColor: "#F6F6F6", }}
-                        />
-                        <Link to="/me/password-recovery" className="_forget">Forget your password</Link>
-                    </>
-                );
-            default:
-                return (<div></div>);
-        }
-    }
 
     return (
         <div className="text-input flex flex-col gap-y-2">
@@ -69,7 +16,31 @@ const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus }) =
             >
                 { name !== undefined ? name : id }
             </label>
-            { getMarkup() }
+            <input
+                type={ type }
+                name={ id }
+                id={ id }
+                value={ initValue }
+                placeholder={ placeholder ? placeholder : "" }
+                readOnly={ readonly }
+                onChange={ onChange }
+                onBlur={ onBlur }
+                onFocus={ onFocus }
+                className={`py-3 px-6 rounded border ${ Array.isArray(errors) && errors.length > 0 ? "bg-red-50 border-red-500 text-red-700 placeholder-red-700" : "" }`}
+                style={{ backgroundColor: "#F6F6F6", }}
+            />
+            { (type === "password" || (Array.isArray(errors) && errors.length > 0)) && (
+                <div className="flex">
+                    { type === "password" && (<Link to="/me/password-recovery" className="_forget order-2">Forget your password</Link>) }
+                    { Array.isArray(errors) && errors.length > 0 && (
+                        <ul className="order-1">
+                            { errors.map((item, index) => (
+                                <li className="text-red-600" key={ index }>{ item }</li>
+                            )) }
+                        </ul>
+                    ) }
+                </div>
+            ) }
         </div>
     );
 }

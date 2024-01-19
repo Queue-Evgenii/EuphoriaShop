@@ -1,6 +1,6 @@
-import SignIn from "../account/SignIn";
-import {useParams} from "react-router-dom";
-import {useCallback} from "react";
+import SignInUp from "../account/SignInUp";
+import {useNavigate, useParams} from "react-router-dom";
+import {useCallback, useEffect} from "react";
 
 import account1 from "./../../images/static/account-1.png";
 import account2 from "./../../images/static/account-2.png";
@@ -8,65 +8,76 @@ import account3 from "./../../images/static/account-3.png";
 import account4 from "./../../images/static/account-4.png";
 import account5 from "./../../images/static/account-5.png";
 import account6 from "./../../images/static/account-6.png";
+import {getMe} from "../../api/account";
+import {setMeToStore} from "../../store/actions/account";
+import Personal from "../account/Personal";
+import store from "../../store";
 
 
 const Account = () => {
+    const routerNavigate = useNavigate();
     const { value } = useParams();
 
     const getPage = useCallback(() => {
         switch (value) {
             case "sign-in":
                 return (
-                    <>
+                    <div className="grid grid-cols-2 gap-x-20">
                         <img src={ account1 } alt=""/>
                         <div>
-                            <SignIn />
+                            <SignInUp />
                         </div>
-                    </>
+                    </div>
                 );
             case "sign-up":
                 return (
-                    <>
+                    <div className="grid grid-cols-2 gap-x-20">
                         <img src={ account2 } alt=""/>
                         <div>
-                            <SignIn />
+                            <SignInUp />
                         </div>
-                    </>
+                    </div>
                 );
             case "password-recovery":
                 return (
-                    <>
+                    <div className="grid grid-cols-2 gap-x-20">
                         <img src={ account3 } alt=""/>
                         <div>
-                            <SignIn />
+                            <SignInUp />
                         </div>
-                    </>
+                    </div>
                 );
             case "check-email":
                 return (
-                    <>
+                    <div className="grid grid-cols-2 gap-x-20">
                         <img src={ account4 } alt=""/>
                         <div>
-                            <SignIn />
+                            <SignInUp />
                         </div>
-                    </>
+                    </div>
                 );
             case "verification":
                 return (
-                    <>
+                    <div className="grid grid-cols-2 gap-x-20">
                         <img src={ account5 } alt=""/>
                         <div>
-                            <SignIn />
+                            <SignInUp />
                         </div>
-                    </>
+                    </div>
                 );
             case "new-password":
                 return (
-                    <>
+                    <div className="grid grid-cols-2 gap-x-20">
                         <img src={ account6 } alt=""/>
                         <div>
-                            <SignIn />
+                            <SignInUp />
                         </div>
+                    </div>
+                );
+            case "personal":
+                return (
+                    <>
+                        <Personal />
                     </>
                 );
             default:
@@ -74,8 +85,18 @@ const Account = () => {
         }
     }, [value]);
 
+    useEffect(() => {
+        getMe()
+            .then(res => {
+                store.dispatch(setMeToStore(res.data.me));
+            })
+            .catch(() => {
+                routerNavigate("/me/sign-in");
+            });
+    }, []);
+
     return (
-        <div className="_container grid grid-cols-2 gap-x-20">
+        <div className="_container">
             { getPage() }
         </div>
     );

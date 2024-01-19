@@ -11,7 +11,7 @@ import cartIcon from "./../../images/icons/cart.svg"
 
 const actions = [
     { id: 0, url: "#", src: heartIcon },
-    { id: 1, url: "#", src: userIcon },
+    { id: 1, url: "/me/personal/info", src: userIcon },
     { id: 2, url: "#", src: cartIcon },
 ];
 
@@ -55,9 +55,9 @@ const Header = () => {
                     )}
                     <div className="flex space-x-3 items-center shrink-0">
                         {actions.map((item) => (
-                            <a key={ item.id } href={ item.url } className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition">
+                            <Link key={ item.id } to={ item.url } className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition">
                                 <img src={ item.src } alt="" className="w-7 h-7" />
-                            </a>
+                            </Link>
                         ))}
                         {windowWidth <= 1024 && (
                             <button onClick={ toggleBurgerMenu } className="p-2 rounded bg-gray-100 hover:bg-gray-200 transition">

@@ -14,6 +14,9 @@ export const reducer = (state = defaultState, action) => {
         case "SET_PRODUCTS_META":
             state = {...state, productsMeta: action.payload};
             return state;
+        case "SET_ME":
+            state = {...state, me: action.payload}
+            return state;
         default:
             return state;
     }
