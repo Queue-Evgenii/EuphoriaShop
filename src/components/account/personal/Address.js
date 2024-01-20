@@ -1,11 +1,53 @@
 import TextInput from "../../general/form/TextInput";
 import {useEffect, useState} from "react";
 import Button from "../../general/form/Button";
+import {validatePhone} from "../../general/form/ValidateFunctions";
 
 const Address = ({ data, emitAddress }) => {
     const [delivery, setDelivery] = useState({});
+    const [deliveryErrors, setDeliveryErrors] = useState({
+        name: [],
+        surname: [],
+        country: [],
+        city: [],
+        street: [],
+        phone: [],
+        zipcode: [],
+    });
+
+    const isValidAddress = () => {
+        const requiredFields = ['name', 'surname', 'country', 'city', 'street'];
+        let obj = { ...deliveryErrors };
+
+        for (const field of requiredFields) {
+            obj = {...obj, [field]: []};
+            if (delivery[field] === undefined || delivery[field].length === 0) {
+                obj = {...obj, [field]: ["Field is required!"]};
+                setDeliveryErrors(obj)
+                return false;
+            }
+        }
+
+        obj = {...obj, phone: []};
+        if (!validatePhone(delivery.phone)) {
+            obj = {...obj, phone: ["Incorrect value!"]};
+            setDeliveryErrors(obj)
+            return false;
+        }
+
+        obj = {...obj, zipcode: []};
+        if (delivery.zipcode === undefined || delivery.zipcode.length === 0 || !Number.isInteger(+delivery.zipcode)) {
+            obj = {...obj, zipcode: ["Incorrect value!"]};
+            setDeliveryErrors(obj)
+            return false;
+        }
+
+        setDeliveryErrors(obj)
+        return true;
+    }
 
     const saveAddress = () => {
+        if (!isValidAddress()) return;
         emitAddress(delivery);
     }
     const cancel = () => {
@@ -25,6 +67,7 @@ const Address = ({ data, emitAddress }) => {
                     name="First Name *"
                     placeholder="First Name"
                     initValue={ delivery.name }
+                    errors={ deliveryErrors.name }
                     onChange={ e => setDelivery({...delivery, name: e.target.value}) }
                 />
                 <TextInput
@@ -33,6 +76,7 @@ const Address = ({ data, emitAddress }) => {
                     name="Last Name *"
                     placeholder="Last Name"
                     initValue={ delivery.surname }
+                    errors={ deliveryErrors.surname }
                     onChange={ e => setDelivery({...delivery, surname: e.target.value}) }
                 />
                 <TextInput
@@ -41,6 +85,7 @@ const Address = ({ data, emitAddress }) => {
                     name="Country/Region *"
                     placeholder="Country/Region"
                     initValue={ delivery.country }
+                    errors={ deliveryErrors.country }
                     onChange={ e => setDelivery({...delivery, country: e.target.value}) }
                 />
                 <TextInput
@@ -48,8 +93,8 @@ const Address = ({ data, emitAddress }) => {
                     id="company"
                     name="Company"
                     placeholder="Company (optional)"
-                    initValue={ delivery.country }
-                    onChange={ e => setDelivery({...delivery, country: e.target.value}) }
+                    initValue={ delivery.company }
+                    onChange={ e => setDelivery({...delivery, company: e.target.value}) }
                 />
                 <TextInput
                     type="text"
@@ -57,6 +102,7 @@ const Address = ({ data, emitAddress }) => {
                     name="City *"
                     placeholder="Town/City"
                     initValue={ delivery.city }
+                    errors={ deliveryErrors.city }
                     onChange={ e => setDelivery({...delivery, city: e.target.value}) }
                 />
                 <TextInput
@@ -65,6 +111,7 @@ const Address = ({ data, emitAddress }) => {
                     name="Street Address *"
                     placeholder="House number and street name"
                     initValue={ delivery.street }
+                    errors={ deliveryErrors.street }
                     onChange={ e => setDelivery({...delivery, street: e.target.value}) }
                 />
                 <TextInput
@@ -73,6 +120,7 @@ const Address = ({ data, emitAddress }) => {
                     name="Phone *"
                     placeholder="Phone"
                     initValue={ delivery.phone }
+                    errors={ deliveryErrors.phone }
                     onChange={ e => setDelivery({...delivery, phone: e.target.value}) }
                 />
                 <TextInput
@@ -81,6 +129,7 @@ const Address = ({ data, emitAddress }) => {
                     name="Postal Code *"
                     placeholder="Postal Code"
                     initValue={ delivery.zipcode }
+                    errors={ deliveryErrors.zipcode }
                     onChange={ e => setDelivery({...delivery, zipcode: e.target.value}) }
                 />
             </div>

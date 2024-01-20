@@ -4,15 +4,24 @@ import Dropdown from "../../general/dropdown/Dropdown";
 import Address from "./Address";
 import {validatePhone} from "../../general/form/ValidateFunctions";
 import {updateMe} from "../../../api/account";
+import {updateUserDelivery} from "../../../api/delivery";
+import {useNavigate} from "react-router-dom";
 
-const Info = ({ me }) => {
+const Info = ({ me, delivery }) => {
+    const routerNavigate = useNavigate();
     const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
     const [phoneErr, setPhoneErr] = useState([]);
-    const [delivery, setDelivery] = useState({});
+    const [localDelivery, setDeliveryToState] = useState({});
 
-    const submitData = () => {
-
+    const submitAddressData = (data) => {
+        updateUserDelivery(data)
+            .then(res => {
+                setDeliveryToState(res);
+            })
+            .catch(() => {
+                routerNavigate("/me/sign-in");
+            });
     }
 
     const saveMe = () => {
@@ -39,6 +48,10 @@ const Info = ({ me }) => {
         setUsername(me.username);
         setPhone(me.phone);
     }, [me]);
+
+    useEffect(() =>  {
+        setDeliveryToState(delivery);
+    }, [delivery]);
 
     if (!me) {
         return (
@@ -84,7 +97,7 @@ const Info = ({ me }) => {
                 </li>
                 <li className="py-2">
                     <Dropdown title="Address">
-                        <Address data={ delivery } emitAddress={ submitData } />
+                        <Address data={ localDelivery } emitAddress={ submitAddressData } />
                     </Dropdown>
                 </li>
             </ol>

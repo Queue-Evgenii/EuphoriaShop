@@ -1,6 +1,6 @@
 import SignInUp from "../account/SignInUp";
 import {useNavigate, useParams} from "react-router-dom";
-import {useCallback, useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import account1 from "./../../images/static/account-1.png";
 import account2 from "./../../images/static/account-2.png";
@@ -17,6 +17,7 @@ import store from "../../store";
 const Account = () => {
     const routerNavigate = useNavigate();
     const { value } = useParams();
+    const [ me, setMeToState ] = useState({});
 
     const getPage = useCallback(() => {
         switch (value) {
@@ -77,23 +78,24 @@ const Account = () => {
             case "personal":
                 return (
                     <>
-                        <Personal />
+                        <Personal data={ me } />
                     </>
                 );
             default:
                 return (<h2 className="text-2xl font-bold">Something went wrong!</h2>);
         }
-    }, [value]);
+    }, [value, me]);
 
     useEffect(() => {
         getMe()
             .then(res => {
                 store.dispatch(setMeToStore(res.data.me));
+                setMeToState({...res.data.me});
             })
             .catch(() => {
                 routerNavigate("/me/sign-in");
             });
-    }, []);
+    }, [setMeToState, routerNavigate]);
 
     return (
         <div className="_container">

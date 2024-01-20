@@ -20,7 +20,7 @@ const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus, err
                 type={ type }
                 name={ id }
                 id={ id }
-                value={ initValue }
+                value={ initValue !== undefined ? initValue : "" }
                 placeholder={ placeholder ? placeholder : "" }
                 readOnly={ readonly }
                 onChange={ onChange }

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import {useRef, useEffect} from "react";
 import "./Dropdown.css";
 
 const Dropdown = (props) => {
@@ -8,8 +8,8 @@ const Dropdown = (props) => {
         if (!accordionTitleRef.current) return;
 
         accordionTitleRef.current.classList.toggle("_active");
-        const accordion = accordionTitleRef.current.nextElementSibling;
 
+        const accordion = accordionTitleRef.current.nextElementSibling;
         if (accordion.style.maxHeight) {
             accordion.style.maxHeight = null;
         } else {

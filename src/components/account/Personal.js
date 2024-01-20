@@ -1,7 +1,10 @@
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import store from "../../store";
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
 import Info from "./personal/Info";
+import { getUserDelivery } from "./../../api/delivery";
+import SignOut from "./personal/SignOut";
+import {setMeToStore} from "../../store/actions/account";
 
 const sidebarLists = [
     {
@@ -43,20 +46,44 @@ const sidebarLists = [
 ];
 
 
-const Personal = () => {
+const Personal = ({ data }) => {
+    const routerNavigate = useNavigate();
     const [me,  setMe] = useState({});
+    const [delivery,  setDeliveryToState] = useState({});
     const { element } = useParams();
 
-    store.subscribe(() => {
-        setMe({...store.getState().me});
-    })
+    const myGetUserDelivery = () => {
+        getUserDelivery()
+            .then(res => {
+                setDeliveryToState(res.data);
+            })
+            .catch(() => {
+                routerNavigate("/me/sign-in");
+            });
+    }
+
+    const signOut = () => {
+        store.dispatch(setMeToStore(null));
+        setDeliveryToState({});
+
+        localStorage.removeItem("access_token");
+        routerNavigate("/me/sign-in");
+    }
+
+    useEffect(() =>  {
+        myGetUserDelivery();
+    }, []);
+
+    useEffect(() =>  {
+        setMe({...data});
+    }, [data]);
 
     const getPage = useCallback(() => {
         switch (element) {
             case "info":
                 return (
                     <>
-                        <Info me={ me } />
+                        <Info me={ me } delivery={ delivery } />
                     </>
                 );
             case "orders":
@@ -72,12 +99,13 @@ const Personal = () => {
             case "sign-out":
                 return (
                     <>
+                        <SignOut emitHandler={ signOut } />
                     </>
                 );
             default:
                 return (<h2 className="text-2xl font-bold">Something went wrong!</h2>);
         }
-    }, [element, me]);
+    }, [element, me, delivery]);
 
     if (!store.getState().me) {
         return (
