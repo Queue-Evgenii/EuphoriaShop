@@ -11,11 +11,11 @@ export const reducer = (state = defaultState, action) => {
         case "SET_MEN_CATEGORIES":
             state = {...state, menCategories: action.payload};
             return state;
-        case "SET_PRODUCTS_META":
-            state = {...state, productsMeta: action.payload};
-            return state;
         case "SET_ME":
             state = {...state, me: action.payload}
+            return state;
+        case "SET_WISHLIST":
+            state = {...state, wishlist: action.payload}
             return state;
         default:
             return state;

@@ -5,6 +5,8 @@ import Info from "./personal/Info";
 import { getUserDelivery } from "./../../api/delivery";
 import SignOut from "./personal/SignOut";
 import {setMeToStore} from "../../store/actions/account";
+import Wishlist from "./personal/wishlist/Wishlist";
+import Orders from "./personal/orders/Orders";
 
 const sidebarLists = [
     {
@@ -89,11 +91,13 @@ const Personal = ({ data }) => {
             case "orders":
                 return (
                     <>
+                        <Orders />
                     </>
                 );
             case "wishlist":
                 return (
                     <>
+                        <Wishlist />
                     </>
                 );
             case "sign-out":

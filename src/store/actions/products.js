@@ -1,5 +1,6 @@
 
-export const setProductsMetaToStore = (data) => ({
-    type: "SET_PRODUCTS_META",
+export const setWishlistToStore = (data) => ({
+    type: "SET_WISHLIST",
     payload: data,
 });
+
