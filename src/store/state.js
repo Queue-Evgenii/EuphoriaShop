@@ -4,4 +4,5 @@ export const defaultState = {
     menCategories: null,
     me: null,
     wishlist: null,
+    state: null,
 };

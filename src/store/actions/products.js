@@ -4,3 +4,8 @@ export const setWishlistToStore = (data) => ({
     payload: data,
 });
 
+export const setCartToStore = (data) => ({
+    type: "SET_CART",
+    payload: data,
+});
+

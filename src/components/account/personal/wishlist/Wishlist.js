@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import IsEmptyPage from "../IsEmptyPage";
+import IsEmptyPage from "../../../general/other/IsEmptyPage";
 import WishlistItem from "./WishlistItem";
 import {getWishlist} from "../../../../api/wishlist";
 import store from "../../../../store";

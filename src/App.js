@@ -11,7 +11,9 @@ import {getCategories} from "./api/categories";
 import {setCategoriesToStore} from "./store/actions/categories";
 import Account from "./components/pages/Account";
 import {getWishlist} from "./api/wishlist";
-import {setWishlistToStore} from "./store/actions/products";
+import {setCartToStore, setWishlistToStore} from "./store/actions/products";
+import Cart from "./components/pages/Cart";
+import {getCart} from "./api/cart";
 
 const App = () => {
     useEffect(() => {
@@ -23,6 +25,10 @@ const App = () => {
             .then(res => {
                 store.dispatch(setWishlistToStore(res.data));
             });
+        getCart()
+            .then(res => {
+                store.dispatch(setCartToStore(res.data));
+            })
     }, []);
 
     return (
@@ -37,6 +43,7 @@ const App = () => {
                     <Route path="/me/:value" element={<Account />} />
                     <Route path="/me/:value/:element" element={<Account />} />
                     <Route path="/me/:value/:element/:order" element={<Account />} />
+                    <Route path="/cart" element={<Cart />} />
                 </Routes>
                 <Footer />
             </Router>

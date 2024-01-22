@@ -1,4 +1,4 @@
-import IsEmptyPage from "../IsEmptyPage";
+import IsEmptyPage from "../../../general/other/IsEmptyPage";
 
 const OrdersList = ({ list }) => {
 

@@ -17,6 +17,9 @@ export const reducer = (state = defaultState, action) => {
         case "SET_WISHLIST":
             state = {...state, wishlist: action.payload}
             return state;
+        case "SET_CART":
+            state = {...state, cart: action.payload}
+            return state;
         default:
             return state;
     }

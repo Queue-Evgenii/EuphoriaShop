@@ -5,6 +5,8 @@ import ProductMenu from "../product/ProductMenu";
 import store from "../../store";
 import Popup from "../general/popup/Popup";
 import Button from "../general/form/Button";
+import {updateCart} from "../../api/cart";
+import {setCartToStore} from "../../store/actions/products";
 
 
 const Product = () => {
@@ -13,6 +15,19 @@ const Product = () => {
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [popupIsActive, togglePopup] = useState(false);
+
+    const addToCart = () => {
+        const data  = {
+            productId: product.productId,
+            size: sizes.find(item => item.current) ? sizes.find(item => item.current).size : null,
+            color: colors.find(item => item.current) ? colors.find(item => item.current).color : null,
+            amount: 1,
+        }
+        updateCart(data)
+            .then(res => {
+                store.dispatch(setCartToStore(res.data));
+            })
+    }
 
     const setColorsByCurrentSize = (sizeArray, productEl) => {
         const newColors = [];
@@ -152,8 +167,8 @@ const Product = () => {
                                 <div className="max-w-64">
                                     <Button
                                         onClick={
-                                            store.getState().me !== null
-                                                ? () => { console.log("not implemented") }
+                                            localStorage.getItem("access_token")
+                                                ? () => { addToCart() }
                                                 : () => { togglePopup(true); window.scrollTo(0, 0); } }
                                     >
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +198,7 @@ const Product = () => {
                                                 <circle cx="22" cy="22" r="22" fill="#F6F6F6"/>
                                                 <path d="M23.8 26.6667V15.4667C23.8 15.2089 23.5985 15 23.35 15H13.45C13.2015 15 13 15.2089 13 15.4667V26.6667C13 26.9244 13.2015 27.1333 13.45 27.1333H14.8M23.8 26.6667C23.8 26.9244 23.5985 27.1333 23.35 27.1333H18.4M23.8 26.6667V18.2667C23.8 18.0089 24.0015 17.8 24.25 17.8H27.2136C27.333 17.8 27.4474 17.8492 27.5318 17.9367L30.8682 21.3967C30.9526 21.4842 31 21.6029 31 21.7266V26.6667C31 26.9244 30.7985 27.1333 30.55 27.1333H29.2M23.8 26.6667C23.8 26.9244 24.0015 27.1333 24.25 27.1333H25.6M14.8 27.1333C14.8 28.1643 15.6059 29 16.6 29C17.5941 29 18.4 28.1643 18.4 27.1333M14.8 27.1333C14.8 26.1024 15.6059 25.2667 16.6 25.2667C17.5941 25.2667 18.4 26.1024 18.4 27.1333M25.6 27.1333C25.6 28.1643 26.4059 29 27.4 29C28.3941 29 29.2 28.1643 29.2 27.1333M25.6 27.1333C25.6 26.1024 26.4059 25.2667 27.4 25.2667C28.3941 25.2667 29.2 26.1024 29.2 27.1333" stroke="#3C4242" strokeWidth="1.1"/>
                                             </svg>
-                                            <span>{ product.delivery.shipping }</span>
+                                            <span>{ `Shipping: ` }</span>
                                         </li>
                                     )}
                                     { product.delivery.refund && (
