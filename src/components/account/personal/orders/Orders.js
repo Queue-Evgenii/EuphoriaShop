@@ -1,6 +1,7 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import OrdersList from "./OrdersList";
+import {getOrders} from "../../../../api/orders";
 
 const navbar = [
     {
@@ -23,6 +24,18 @@ const Orders = () => {
     const [cancelledOrders, setCancelledOrdersToState] = useState([]);
     const [completedOrders, setCompletedOrdersToState] = useState([]);
 
+    useEffect(() => {
+        getOrders()
+            .then(res => {
+                setActiveOrdersToState(res.data.filter(item => item.status === "confirmation" | "inprogress"));
+                setCancelledOrdersToState(res.data.filter(item => item.status === "cancelled"));
+                setCompletedOrdersToState(res.data.filter(item => item.status === "shipped"));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
+
     const getMarkup = () =>  {
         switch (order) {
             case "active":
@@ -39,8 +52,15 @@ const Orders = () => {
     return (
         <div>
             <header>
-                { navbar.map(item => (
-                    <NavLink to={ item.src }>{ item.name }</NavLink>
+                { navbar.map((item, index) => (
+                    <NavLink
+                        key={ index }
+                        to={ item.src }
+                        className="py-3 px-12"
+                        style={({ isActive }) => isActive ? { backgroundColor: "#F6F6F6", borderBottom: "2px solid #3C4242",} : {}}
+                    >
+                        { item.name }
+                    </NavLink>
                 )) }
             </header>
             { getMarkup() }

@@ -2,9 +2,10 @@ import Button from "../../../general/form/Button";
 import {updateWishlist} from "../../../../api/wishlist";
 import store from "../../../../store";
 import {setWishlistToStore} from "../../../../store/actions/products";
+import {useNavigate} from "react-router-dom";
 
 const WishlistItem = ({ item }) => {
-
+    const routerNavigate = useNavigate();
     const removeFromFavorite = (id) =>  {
 
         updateWishlist(id)
@@ -40,8 +41,8 @@ const WishlistItem = ({ item }) => {
                     <span className="font-bold text-gray-500">{ `$${item.price}` }</span>
                 </div>
                 <div className="flex-[0_0_150px]">
-                    <Button>
-                        Add to cart
+                    <Button onClick={ () => routerNavigate(`/product/${item.productId}`) }>
+                        To product
                     </Button>
                 </div>
             </div>

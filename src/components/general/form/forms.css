@@ -1,0 +1,36 @@
+
+.text-input ._forget {
+    text-decoration: underline;
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+._radio {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+._radio::before,
+._radio::after {
+    content: "";
+    position: absolute;
+    transition: transform 0.3s ease-out;
+    border-radius: 50%;
+}
+._radio::before {
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    border: 1px solid #3C4242;
+    left: 0;
+}
+._radio::after {
+    transform: scale(0);
+    width: 10px;
+    height: 10px;
+    background-color: #3C4242;
+    left: 2px;
+}
+._radio._checked::after {
+    transform: scale(1);
+}

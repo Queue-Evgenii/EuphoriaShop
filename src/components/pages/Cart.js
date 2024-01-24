@@ -4,9 +4,12 @@ import CartItem from "../cart/CartItem";
 import store from "../../store";
 import {updateCart} from "../../api/cart";
 import {setCartToStore} from "../../store/actions/products";
+import Button from "../general/form/Button";
+import {useNavigate} from "react-router-dom";
 
 const Cart = () => {
     const [cart, setCartToState] = useState([]);
+    const routerNavigate = useNavigate();
 
     const update = (item) => {
         updateCart(item)
@@ -16,6 +19,7 @@ const Cart = () => {
     }
 
     const increment = (item) => {
+        if (Number(item.amount) + 1 > Number(item.maxAmount)) return;
         item.amount++;
         update(item);
     }
@@ -40,6 +44,25 @@ const Cart = () => {
         store.subscribe(setCart);
     },[]);
 
+    const getSubtotal = () => {
+        let result = 0;
+        cart.forEach(item => {
+            result += (item.price * item.amount);
+        })
+        return result;
+    }
+    const getTotalShipping = () => {
+        let result = 0;
+        cart.forEach(item => {
+            result += item.shipping;
+        })
+        return result;
+    }
+
+    const RedirectToCheckout = () => {
+        routerNavigate("/checkout");
+    }
+
     if ((cart && cart.length > 0)) {
         return (
             <div>
@@ -63,8 +86,21 @@ const Cart = () => {
                             </li>
                         )) }
                     </ul>
-                    <footer></footer>
                 </div>
+                <footer style={{ background: "#F6F6F6",padding: "60px 0" }}>
+                    <div className="_container" style={{  maxWidth: "664px",  }}>
+                        <div className="pb-4 border-b border-gray-400 text-2xl *:grid *:grid-cols-2">
+                            <h3 className="font-medium"><span>Sub Total</span><span className="text-right">{ cart ? `$${getSubtotal()}` : "" }</span></h3>
+                            <h3 className="font-medium mb-4"><span>Shipping</span><span className="text-right">{ cart ? `$${getTotalShipping()}` : "" }</span></h3>
+                            <h2 className="font-bold"><span>Grand Total</span><span className="text-right">{ cart ? `$${getSubtotal() + getTotalShipping()}` : "" }</span></h2>
+                        </div>
+                        <div className="max-w-64 py-4">
+                            <Button onClick={ RedirectToCheckout }>
+                                Proceed To Checkout
+                            </Button>
+                        </div>
+                    </div>
+                </footer>
             </div>
         );
     }

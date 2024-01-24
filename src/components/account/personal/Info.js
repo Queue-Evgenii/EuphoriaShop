@@ -97,7 +97,7 @@ const Info = ({ me, delivery }) => {
                 </li>
                 <li className="py-2">
                     <Dropdown title="Address">
-                        <Address data={ localDelivery } emitAddress={ submitAddressData } />
+                        <Address data={ localDelivery } emitAddress={ submitAddressData } isDescripton={ true } />
                     </Dropdown>
                 </li>
             </ol>

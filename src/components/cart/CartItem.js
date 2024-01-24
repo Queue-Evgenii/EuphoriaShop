@@ -14,7 +14,7 @@ const CartItem = ({ item, increment, decrement, deleteFromCart }) => {
                 ) }
                 <div className="!text-left">
                     <h3 className="text-lg font-bold">{ item.name ? item.name : "" }</h3>
-                    <h4 className="font-medium" style={{ color: "#807D7E", }}>{ `Color: ${ item.color ? item.color : "" }` }</h4>
+                    <h4 className="font-medium" style={{ color: "#807D7E", }}>{ `Color: ${ item.color ? item.colorName : "" }` }</h4>
                     <h4 className="font-medium" style={{ color: "#807D7E", }}>{ `Size: ${ item.size ? item.size : "" }` }</h4>
                 </div>
             </div>

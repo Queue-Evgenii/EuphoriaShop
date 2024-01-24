@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Button from "../../general/form/Button";
 import {validatePhone} from "../../general/form/ValidateFunctions";
 
-const Address = ({ data, emitAddress }) => {
+const Address = ({ data, emitAddress, isDescription }) => {
     const [delivery, setDelivery] = useState({});
     const [deliveryErrors, setDeliveryErrors] = useState({
         name: [],
@@ -133,14 +133,16 @@ const Address = ({ data, emitAddress }) => {
                     onChange={ e => setDelivery({...delivery, zipcode: e.target.value}) }
                 />
             </div>
-            <TextInput
-                type="multiline"
-                id="description"
-                name="Delivery Instruction"
-                placeholder="Delivery Instruction"
-                initValue={ delivery.description }
-                onChange={ e => setDelivery({...delivery, description: e.target.value}) }
-            />
+            { isDescription && (
+                <TextInput
+                    type="multiline"
+                    id="description"
+                    name="Delivery Instruction"
+                    placeholder="Delivery Instruction"
+                    initValue={ delivery.description }
+                    onChange={ e => setDelivery({...delivery, description: e.target.value}) }
+                />
+            ) }
             <div className="grid grid-cols-3 mt-4 gap-x-4">
                 <Button onClick={ saveAddress }>
                     <span>Save</span>

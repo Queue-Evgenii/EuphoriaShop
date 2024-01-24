@@ -14,6 +14,7 @@ import {getWishlist} from "./api/wishlist";
 import {setCartToStore, setWishlistToStore} from "./store/actions/products";
 import Cart from "./components/pages/Cart";
 import {getCart} from "./api/cart";
+import Checkout from "./components/pages/Checkout";
 
 const App = () => {
     useEffect(() => {
@@ -44,6 +45,7 @@ const App = () => {
                     <Route path="/me/:value/:element" element={<Account />} />
                     <Route path="/me/:value/:element/:order" element={<Account />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
                 </Routes>
                 <Footer />
             </Router>

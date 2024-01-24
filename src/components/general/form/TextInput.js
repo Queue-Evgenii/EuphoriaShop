@@ -1,5 +1,5 @@
 
-import "./TextInput.css";
+import "./forms.css";
 import {Link} from "react-router-dom";
 
 const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus, errors, initValue, readonly }) => {
@@ -14,10 +14,10 @@ const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus, err
                 htmlFor={ id }
                 className="text-lg font-semibold tracking-wide"
             >
-                { name !== undefined ? name : id }
+                { name !== undefined ? name : "" }
             </label>
             <input
-                type={ type }
+                type="text"
                 name={ id }
                 id={ id }
                 value={ initValue !== undefined ? initValue : "" }
@@ -26,7 +26,7 @@ const TextInput = ({ type, id, name, placeholder, onChange, onBlur, onFocus, err
                 onChange={ onChange }
                 onBlur={ onBlur }
                 onFocus={ onFocus }
-                className={`py-3 px-6 rounded border ${ Array.isArray(errors) && errors.length > 0 ? "bg-red-50 border-red-500 text-red-700 placeholder-red-700" : "" }`}
+                className={` block py-3 px-6 rounded border ${ Array.isArray(errors) && errors.length > 0 ? "bg-red-50 border-red-500 text-red-700 placeholder-red-700" : "" }`}
                 style={{ backgroundColor: "#F6F6F6", }}
             />
             { (type === "password" || (Array.isArray(errors) && errors.length > 0)) && (

@@ -1,5 +1,5 @@
 import {Link, useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getProduct} from "../../api/product";
 import ProductMenu from "../product/ProductMenu";
 import store from "../../store";
@@ -7,6 +7,7 @@ import Popup from "../general/popup/Popup";
 import Button from "../general/form/Button";
 import {updateCart} from "../../api/cart";
 import {setCartToStore} from "../../store/actions/products";
+import BounceNotification from "../general/notifications/BounceNotification";
 
 
 const Product = () => {
@@ -15,6 +16,7 @@ const Product = () => {
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [popupIsActive, togglePopup] = useState(false);
+    const [isNotifyOpen, setIsNotifyOpen] = useState(false);
 
     const addToCart = () => {
         const data  = {
@@ -26,6 +28,8 @@ const Product = () => {
         updateCart(data)
             .then(res => {
                 store.dispatch(setCartToStore(res.data));
+                setIsNotifyOpen(true);
+                setTimeout(()  => setIsNotifyOpen(false), 1000)
             })
     }
 
@@ -240,6 +244,7 @@ const Product = () => {
                     </Link>
                 </div>
             </Popup>
+            <BounceNotification message="Product has been added!" isOpen={ isNotifyOpen } />
         </div>
     );
 }
